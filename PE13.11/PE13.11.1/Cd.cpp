@@ -2,6 +2,17 @@
 #include <cstring>
 #include "Cd.hpp"
 
+// Cd protected 方法定义：
+
+const char * Cd::perfms() const
+{
+    return performers;
+}
+
+// 结束 Cd protected 方法定义
+
+// Cd public 方法定义：
+
 Cd::Cd(const char * s1, const char *s2, int n, double x)
 {
     strcpy(performers, s1);
@@ -50,6 +61,20 @@ void Cd::Report() const
     cout << "playtime: " << playtime << endl;
 }
 
+const Cd & Cd::operator=(const Cd & d)
+{
+    strcpy(performers, d.performers);
+    strcpy(label, d.label);
+    selections = d.selections;
+    playtime = d.playtime;
+
+    return d;
+}
+
+// 结束 Cd public 方法定义
+
+// Classic public 方法定义
+
 Classic::Classic() : Cd()
 {
     ;
@@ -75,14 +100,14 @@ Classic::Classic(const char * s1, const Cd & d) : Cd(d)
 Classic::Classic(const Classic & c) : Cd(c)
 {
     using std::cout, std::endl;
-    cout << "Classic复制构造函数被调用" << endl; // ToDo: 输出加上performers
+    cout << "Classic复制构造函数被调用, performers: " << Cd::perfms() << endl; // ToDo: 输出加上performers
     work = c.work;
 }
 
 Classic::~Classic()
 {
     using std::cout, std::endl;
-    cout << "Classic默认析构函数被调用" << endl;
+    cout << "Classic默认析构函数被调用, performers: " << Cd::perfms() << endl;
 }
 
 void Classic::Report() const
@@ -91,3 +116,5 @@ void Classic::Report() const
 
     std::cout << "work: " << work << std::endl;
 }
+
+// 结束 Classic public 方法定义
